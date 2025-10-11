@@ -29,7 +29,7 @@ export default function GlassViewScreen() {
     return (
         <>
             <Image
-                className="absolute inset-0"
+                className="absolute inset-0 dark:opacity-40"
                 source={{
                     uri: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=1400&fit=crop',
                 }}
