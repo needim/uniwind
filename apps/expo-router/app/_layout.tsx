@@ -71,6 +71,24 @@ export default function RootLayout() {
                         },
                     }}
                 />
+                <Stack.Screen
+                    name="formSheets/scrollView"
+                    options={{
+                        title: 'FormSheet with ScrollView',
+                        presentation: Platform.select({
+                            ios: 'formSheet',
+                            android: 'modal',
+                        }),
+                        sheetAllowedDetents: [0.5, 1],
+                        headerRight: () => undefined,
+                        contentStyle: {
+                            backgroundColor: Platform.select({
+                                ios: 'transparent',
+                                android: navigationTheme.colors.background,
+                            }),
+                        },
+                    }}
+                />
                 {sections.map((section) => (
                     <Stack.Screen
                         key={section.path}
