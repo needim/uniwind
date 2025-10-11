@@ -47,7 +47,7 @@ function ThemedText({
     animated,
     ...props
 }:
-    & React.ComponentPropsWithoutRef<typeof RNText>
+    & React.ComponentProps<typeof RNText>
     & VariantProps<typeof textVariants>
     & { animated?: boolean })
 {
