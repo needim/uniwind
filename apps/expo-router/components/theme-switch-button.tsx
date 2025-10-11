@@ -1,5 +1,5 @@
 import { IconSymbol, IconSymbolName } from '@/components/icon-symbol'
-import { UniwindThemes } from '@/utils/theme'
+import { UniwindThemes, useStoredTheme } from '@/utils/theme'
 import { HeaderButton } from '@react-navigation/elements'
 import { router } from 'expo-router'
 import { ColorValue } from 'react-native'
@@ -24,11 +24,8 @@ const getIconColorForTheme = (
     return colorMap[theme] ?? 'black'
 }
 
-interface ThemeSwitchButtonProps {
-    storedTheme: UniwindThemes
-}
-
-export function ThemeSwitchButton({ storedTheme }: ThemeSwitchButtonProps) {
+export function ThemeSwitchButton() {
+    const { storedTheme } = useStoredTheme()
     const { theme: uniwindTheme } = useUniwind()
     const primaryStyle = useResolveClassNames('bg-primary')
 

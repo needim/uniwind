@@ -1,6 +1,6 @@
-import { ThemeSwitchButton } from '@/components/theme-toggle-button'
+import { ThemeSwitchButton } from '@/components/theme-switch-button'
 import '@/globals.css'
-import { getNativeColorScheme, getNavigationTheme, getStoredThemeSync, useStoredTheme } from '@/utils/theme'
+import { getNativeColorScheme, getNavigationTheme, getStoredThemeSync } from '@/utils/theme'
 import {
     ThemeProvider,
 } from '@react-navigation/native'
@@ -34,9 +34,8 @@ const sections = [
 ]
 
 export default function RootLayout() {
-    const { theme: uniwindTheme } = useUniwind()
-    const { storedTheme } = useStoredTheme()
-    const navigationTheme = getNavigationTheme(uniwindTheme)
+    const { theme } = useUniwind()
+    const navigationTheme = getNavigationTheme(theme)
 
     return (
         <ThemeProvider value={navigationTheme}>
@@ -45,7 +44,7 @@ export default function RootLayout() {
                     headerBackButtonDisplayMode: 'minimal',
                     headerTransparent: true,
                     sheetGrabberVisible: true,
-                    headerRight: () => <ThemeSwitchButton storedTheme={storedTheme} />,
+                    headerRight: () => <ThemeSwitchButton />,
                 }}
             >
                 <Stack.Screen name="index" options={{ title: 'Expo + Uniwind' }} />
@@ -72,7 +71,7 @@ export default function RootLayout() {
                     />
                 ))}
             </Stack>
-            <StatusBar style={uniwindTheme === 'dark' ? 'light' : 'dark'} />
+            <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
         </ThemeProvider>
     )
 }
