@@ -32,6 +32,7 @@ const sections = [
     { name: 'Text Alignment', path: 'sections/text-alignment' },
     { name: 'Transform', path: 'sections/transform' },
     { name: 'Reanimated', path: 'sections/reanimated' },
+    { name: 'GlassView', path: 'sections/glass-view' },
 ]
 
 export default function RootLayout() {
