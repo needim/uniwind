@@ -15,6 +15,7 @@ export const getNativeColorScheme = (
 ): NativeColorScheme => {
     const colorSchemeMap: Record<string, NativeColorScheme> = {
         sepia: 'light',
+        bubblegum: 'light',
         system: undefined,
     }
 
@@ -65,6 +66,16 @@ const SepiaNavigationTheme = {
     },
 }
 
+const BubblegumNavigationTheme = {
+    ...DefaultTheme,
+    dark: false,
+    colors: {
+        ...DefaultTheme.colors,
+        background: '#F7E6EE',
+        card: '#F7E6EE',
+    },
+}
+
 const LightNavigationTheme = {
     ...DefaultTheme,
     dark: false,
@@ -83,6 +94,7 @@ export const getNavigationTheme = (uniwindTheme: UniwindThemes) => {
         light: LightNavigationTheme,
         dark: DarkTheme,
         sepia: SepiaNavigationTheme,
+        bubblegum: BubblegumNavigationTheme,
         system: Appearance.getColorScheme() === 'dark' ? DarkTheme : DefaultTheme,
     }
     return themeMap[uniwindTheme]

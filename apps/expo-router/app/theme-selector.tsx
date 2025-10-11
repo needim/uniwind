@@ -1,7 +1,7 @@
 import { IconSymbol, IconSymbolName } from '@/components/icon-symbol'
 import { ThemedText } from '@/components/themed-text'
 import { cn } from '@/utils/cn'
-import { useStoredTheme } from '@/utils/theme'
+import { UniwindThemes, useStoredTheme } from '@/utils/theme'
 import { useHeaderHeight } from '@react-navigation/elements'
 import { TouchableOpacity, View } from 'react-native'
 
@@ -13,7 +13,7 @@ export default function ThemeSelectorSheet() {
         theme,
         iconName,
     }: {
-        theme: 'light' | 'system' | 'dark' | 'sepia'
+        theme: UniwindThemes
         iconName: IconSymbolName
     }) => {
         const handlePress = async () => {
@@ -50,11 +50,12 @@ export default function ThemeSelectorSheet() {
         >
             <View className="flex-row gap-3 mb-3">
                 <ThemeButton theme="light" iconName="sun.max.fill" />
+                <ThemeButton theme="system" iconName="circle.righthalf.filled" />
                 <ThemeButton theme="dark" iconName="moon.fill" />
             </View>
             <View className="flex-row gap-3">
                 <ThemeButton theme="sepia" iconName="camera.filters" />
-                <ThemeButton theme="system" iconName="circle.righthalf.filled" />
+                <ThemeButton theme="bubblegum" iconName="camera.filters" />
             </View>
         </View>
     )
