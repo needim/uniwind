@@ -31,6 +31,7 @@ const sections = [
     { name: 'Self Alignment', path: 'sections/self-alignment' },
     { name: 'Text Alignment', path: 'sections/text-alignment' },
     { name: 'Transform', path: 'sections/transform' },
+    { name: 'Reanimated', path: 'sections/reanimated' },
 ]
 
 export default function RootLayout() {
@@ -42,7 +43,10 @@ export default function RootLayout() {
             <Stack
                 screenOptions={{
                     headerBackButtonDisplayMode: 'minimal',
-                    headerTransparent: true,
+                    headerTransparent: Platform.select({
+                        ios: true,
+                        android: false,
+                    }),
                     sheetGrabberVisible: true,
                     headerRight: () => <ThemeSwitchButton />,
                 }}
@@ -52,7 +56,10 @@ export default function RootLayout() {
                     name="theme-selector"
                     options={{
                         title: 'Theme',
-                        presentation: 'formSheet',
+                        presentation: Platform.select({
+                            ios: 'formSheet',
+                            android: 'modal',
+                        }),
                         sheetAllowedDetents: 'fitToContents',
                         headerRight: () => undefined,
                         contentStyle: {

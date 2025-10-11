@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/themed-text'
 import { cn } from '@/utils/cn'
 import { useHeaderHeight } from '@react-navigation/elements'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { Platform, ScrollView, View, ViewProps } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const DemoBox = ({
@@ -11,9 +11,7 @@ export const DemoBox = ({
     color = 'bg-blue-500',
     textColor = 'text-white',
     size = 'default',
-}: {
-    children: React.ReactNode
-    className?: string
+}: ViewProps & {
     color?: string
     textColor?: string
     size?: 'small' | 'default' | 'large'
@@ -43,10 +41,7 @@ export const DemoBox = ({
 export const SectionScreen = ({
     children,
     className,
-}: {
-    children: React.ReactNode
-    className?: string
-}) => {
+}: ViewProps) => {
     const headerHeight = useHeaderHeight()
     const insets = useSafeAreaInsets()
 
@@ -55,7 +50,10 @@ export const SectionScreen = ({
             className="flex-1"
             contentContainerClassName={cn('p-4 gap-4', className)}
             contentContainerStyle={{
-                paddingTop: headerHeight,
+                paddingTop: Platform.select({
+                    ios: headerHeight,
+                    android: 16,
+                }),
                 paddingBottom: insets.bottom,
             }}
         >

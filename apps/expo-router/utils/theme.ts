@@ -61,6 +61,7 @@ const SepiaNavigationTheme = {
     colors: {
         ...DefaultTheme.colors,
         background: '#F6F1E6',
+        card: '#F6F1E6',
     },
 }
 
@@ -70,6 +71,7 @@ const LightNavigationTheme = {
     colors: {
         ...DefaultTheme.colors,
         background: '#fff',
+        card: '#fff',
     },
 }
 

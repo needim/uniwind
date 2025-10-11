@@ -36,7 +36,9 @@ export function ThemeSwitchButton() {
     const iconName = THEME_ICON_NAMES[storedTheme as UniwindThemes] ?? THEME_ICON_NAMES.system
 
     return (
-        <HeaderButton onPress={() => router.push('/theme-selector')}>
+        <HeaderButton
+            onPress={() => router.push('/theme-selector')}
+        >
             <IconSymbol
                 name={iconName}
                 size={24}

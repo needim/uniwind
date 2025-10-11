@@ -75,6 +75,10 @@ export default function HomeScreen() {
                     hideBorder
                 />
             </ListSection>
+
+            <ListSection title="Other">
+                <ListItem title="Reanimated" onPress={() => router.push('/sections/reanimated')} hideBorder />
+            </ListSection>
         </SectionScreen>
     )
 }

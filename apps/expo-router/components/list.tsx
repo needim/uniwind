@@ -1,20 +1,18 @@
-import React, { memo } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { TouchableOpacity, View, ViewProps } from 'react-native'
 import Animated, { LinearTransition } from 'react-native-reanimated'
 
 import { IconSymbol } from '@/components/icon-symbol'
 import { ThemedText } from '@/components/themed-text'
 import { cn } from '@/utils/cn'
 
-interface ListSectionProps {
+type ListSectionProps = ViewProps & {
     title?: string
-    children: React.ReactNode
-    className?: string
     useLinearTransition?: boolean
     containerClassName?: string
 }
 
-export const ListSection = memo(function ListSection({
+export const ListSection = function ListSection({
     title,
     children,
     className,
@@ -42,16 +40,11 @@ export const ListSection = memo(function ListSection({
 
             <Animated.View
                 className={cn(
-                    'overflow-hidden rounded-xl bg-card px-4 py-0',
+                    'overflow-hidden rounded-xl bg-card px-4 py-0 shadow-xs',
                     containerClassName,
                 )}
                 style={{
                     borderCurve: 'continuous',
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 0 },
-                    shadowOpacity: 1,
-                    shadowRadius: 16,
-                    elevation: 8,
                 }}
                 layout={useLinearTransition ? LinearTransition : undefined}
             >
@@ -59,7 +52,7 @@ export const ListSection = memo(function ListSection({
             </Animated.View>
         </Animated.View>
     )
-})
+}
 
 interface ListItemProps {
     title: string
@@ -71,7 +64,7 @@ interface ListItemProps {
     titleTextClassName?: string
 }
 
-export const ListItem = React.memo(function ListItem({
+export const ListItem = function ListItem({
     title,
     subtitle,
     onPress,
@@ -122,4 +115,4 @@ export const ListItem = React.memo(function ListItem({
             )}
         </TouchableOpacity>
     )
-})
+}
