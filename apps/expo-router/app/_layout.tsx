@@ -4,6 +4,7 @@ import { getNativeColorScheme, getNavigationTheme, getStoredThemeSync } from '@/
 import {
     ThemeProvider,
 } from '@react-navigation/native'
+import { isLiquidGlassAvailable } from 'expo-glass-effect'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { Appearance, Platform } from 'react-native'
@@ -65,7 +66,7 @@ export default function RootLayout() {
                         headerRight: () => undefined,
                         contentStyle: {
                             backgroundColor: Platform.select({
-                                ios: 'transparent',
+                                ios: isLiquidGlassAvailable() ? 'transparent' : navigationTheme.colors.background,
                                 android: navigationTheme.colors.background,
                             }),
                         },
@@ -83,7 +84,7 @@ export default function RootLayout() {
                         headerRight: () => undefined,
                         contentStyle: {
                             backgroundColor: Platform.select({
-                                ios: 'transparent',
+                                ios: isLiquidGlassAvailable() ? 'transparent' : navigationTheme.colors.background,
                                 android: navigationTheme.colors.background,
                             }),
                         },
@@ -92,7 +93,7 @@ export default function RootLayout() {
                 <Stack.Screen
                     name="formSheets/scrollViewWithFitToContents"
                     options={{
-                        title: 'FormSheet+ScrollView (Fit To Contents)',
+                        title: 'FormSheet+ScrollView (FitToContents)',
                         presentation: Platform.select({
                             ios: 'formSheet',
                             android: 'modal',
@@ -101,7 +102,7 @@ export default function RootLayout() {
                         headerRight: () => undefined,
                         contentStyle: {
                             backgroundColor: Platform.select({
-                                ios: 'transparent',
+                                ios: isLiquidGlassAvailable() ? 'transparent' : navigationTheme.colors.background,
                                 android: navigationTheme.colors.background,
                             }),
                         },
