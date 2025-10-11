@@ -89,6 +89,24 @@ export default function RootLayout() {
                         },
                     }}
                 />
+                <Stack.Screen
+                    name="formSheets/scrollViewWithFitToContents"
+                    options={{
+                        title: 'FormSheet+ScrollView (Fit To Contents)',
+                        presentation: Platform.select({
+                            ios: 'formSheet',
+                            android: 'modal',
+                        }),
+                        sheetAllowedDetents: 'fitToContents',
+                        headerRight: () => undefined,
+                        contentStyle: {
+                            backgroundColor: Platform.select({
+                                ios: 'transparent',
+                                android: navigationTheme.colors.background,
+                            }),
+                        },
+                    }}
+                />
                 {sections.map((section) => (
                     <Stack.Screen
                         key={section.path}

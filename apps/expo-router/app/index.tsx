@@ -78,8 +78,16 @@ export default function HomeScreen() {
 
             <ListSection title="Other">
                 <ListItem title="Reanimated" onPress={() => router.push('/sections/reanimated')} />
-                <ListItem title="GlassView" onPress={() => router.push('/sections/glass-view')} />
-                <ListItem title="FormSheet with ScrollView" onPress={() => router.push('/formSheets/scrollView')} hideBorder />
+                <ListItem title="GlassView" onPress={() => router.push('/sections/glass-view')} hideBorder />
+            </ListSection>
+
+            <ListSection title="FormSheets">
+                <ListItem title="with ScrollView" onPress={() => router.push('/formSheets/scrollView')} />
+                <ListItem
+                    title="with ScrollView (FitToContents)"
+                    onPress={() => router.push('/formSheets/scrollViewWithFitToContents')}
+                    hideBorder
+                />
             </ListSection>
         </SectionScreen>
     )
