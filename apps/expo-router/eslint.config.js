@@ -6,5 +6,13 @@ module.exports = defineConfig([
     expoConfig,
     {
         ignores: ['dist/*'],
+        settings: {
+            // Handle monorepo workspace packages
+            'import/resolver': {
+                uniwind: {
+                    root: '../../packages/uniwind',
+                },
+            },
+        },
     },
 ])
