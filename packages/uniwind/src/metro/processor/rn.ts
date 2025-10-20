@@ -1,4 +1,4 @@
-import { addMissingSpaces, isDefined, percentageToFloat, toCamelCase } from '../utils'
+import { addMissingSpaces, isDefined, percentageToFloat, pipe, toCamelCase } from '../utils'
 import type { ProcessorBuilder } from './processor'
 
 const cssToRNMap: Record<string, (value: any) => Record<string, any>> = {
@@ -173,18 +173,6 @@ const cssToRNMap: Record<string, (value: any) => Record<string, any>> = {
     fontVariantNumeric: value => ({
         fontVariant: value,
     }),
-    paddingInline: value => ({
-        paddingHorizontal: value,
-    }),
-    marginInline: value => ({
-        marginHorizontal: value,
-    }),
-    paddingBlock: value => ({
-        paddingVertical: value,
-    }),
-    marginBlock: value => ({
-        marginVertical: value,
-    }),
 }
 
 export class RN {
@@ -193,7 +181,18 @@ export class RN {
     cssToRN(property: string, value: any) {
         const transformedProperty = property.startsWith('--')
             ? property
-            : toCamelCase(property)
+            : pipe(property)(
+                toCamelCase,
+                x => {
+                    if (x.includes('padding') || x.includes('margin')) {
+                        return x
+                            .replace('Inline', 'Horizontal')
+                            .replace('Block', 'Vertical')
+                    }
+
+                    return x
+                },
+            )
 
         const rn = this.transformProperty(
             transformedProperty,

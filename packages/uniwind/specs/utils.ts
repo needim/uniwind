@@ -1,6 +1,5 @@
 import { mock } from 'bun:test'
 import { readFileSync } from 'fs'
-import { RNStyle } from '../src/core/types'
 import { compileVirtual } from '../src/metro/compileVirtual'
 import { Platform } from '../src/metro/types'
 import { UniwindRuntimeMock } from './mocks'
@@ -15,26 +14,13 @@ export const getStyleSheetsFromCandidates = async <T extends string>(...candidat
         candidates,
         platform: Platform.iOS,
         cssPath: testCSSPath,
+        polyfills: {},
         themes: ['light', 'dark'],
     })
 
     new Function(virtualJS)()
 
     return globalThis.__uniwind__computeStylesheet(UniwindRuntimeMock)
-}
-
-export const getStylesFromCandidates = async <T extends string>(...candidates: Array<T>) => {
-    const stylesheets = await getStyleSheetsFromCandidates(...candidates)
-
-    return Object.fromEntries(
-        Object.entries(stylesheets).map(([key, value]) => {
-            if (!Array.isArray(value)) {
-                return null
-            }
-
-            return [key, value.map(entry => Object.fromEntries(entry.entries))]
-        }).filter(Boolean),
-    ) as Record<T, Array<RNStyle>>
 }
 
 export const twSize = (size: number) => size * 4

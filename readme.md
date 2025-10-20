@@ -18,7 +18,7 @@
 ## Installation
 
 ```sh
-bun install uniwind@beta tailwindcss
+bun install uniwind@next tailwindcss
 ```
 
 Then follow [installation guides](https://docs.uniwind.dev/quickstart)

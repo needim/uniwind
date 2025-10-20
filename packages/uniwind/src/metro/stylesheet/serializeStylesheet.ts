@@ -171,16 +171,12 @@ const serialize = (value: any): string => {
 
 export const serializeStylesheet = (stylesheet: Stylesheet) => {
     const hotReloadFN = 'globalThis.__uniwind__hot_reload?.();'
-    const currentColor = `get currentColor() { return rt.colorScheme === 'dark' ? '#ffffff' : '#000000' },`
+    const currentColor = `get currentColor() { return function() { return rt.colorScheme === 'dark' ? '#ffffff' : '#000000' } },`
 
     const serializedStylesheet = Object.entries(stylesheet).map(([key, value]) => {
         const stringifiedValue = isNumber(value)
             ? String(value)
             : serialize(value)
-
-        if (stringifiedValue.includes('this')) {
-            return `get "${key}"() { return ${stringifiedValue} }`
-        }
 
         return `"${key}": ${stringifiedValue}`
     }).join(',\n')
