@@ -173,6 +173,18 @@ const cssToRNMap: Record<string, (value: any) => Record<string, any>> = {
     fontVariantNumeric: value => ({
         fontVariant: value,
     }),
+    paddingInline: value => ({
+        paddingHorizontal: value,
+    }),
+    marginInline: value => ({
+        marginHorizontal: value,
+    }),
+    paddingBlock: value => ({
+        paddingVertical: value,
+    }),
+    marginBlock: value => ({
+        marginVertical: value,
+    }),
 }
 
 export class RN {

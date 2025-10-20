@@ -18,8 +18,8 @@ describe('Converts tailwind spacings', () => {
         )
 
         expect(styles['p-4'][0]).toHaveProperty('padding', twSize(4))
-        expect(styles['px-4'][0]).toHaveProperty('paddingInline', twSize(4))
-        expect(styles['py-4'][0]).toHaveProperty('paddingBlock', twSize(4))
+        expect(styles['px-4'][0]).toHaveProperty('paddingHorizontal', twSize(4))
+        expect(styles['py-4'][0]).toHaveProperty('paddingVertical', twSize(4))
         expect(styles['pt-4'][0]).toHaveProperty('paddingTop', twSize(4))
         expect(styles['pb-4'][0]).toHaveProperty('paddingBottom', twSize(4))
         expect(styles['pl-4'][0]).toHaveProperty('paddingLeft', twSize(4))

@@ -59,7 +59,7 @@ const withAutoUniwind = (Component: Component<AnyObject>) => (props: AnyObject) 
         const dispose = UniwindStore.subscribe(rerender, deps)
 
         return dispose
-    }, deps)
+    }, [deps])
 
     return (
         <Component

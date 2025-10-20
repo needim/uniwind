@@ -20,15 +20,14 @@ const getPlatformFromVirtualPath = (path: string) => {
 
 const platforms = [Platform.iOS, Platform.Android, Platform.Web]
 
-export const withUniwindConfig = (
+export const withUniwindConfig = async (
     config: MetroConfig,
     uniwindConfig: UniwindConfig,
-): MetroConfig => {
+): Promise<MetroConfig> => {
     if (!fs.existsSync(cacheDir)) {
         fs.mkdirSync(cacheDir)
     }
 
-    platforms.forEach(platform => fs.writeFileSync(getVirtualPath(platform), ''))
     uniwindConfig.themes = uniq([
         'light',
         'dark',
@@ -132,11 +131,19 @@ export const withUniwindConfig = (
             css: uniwind.cssFile,
             platform,
             themes: uniwindConfig.themes,
+            polyfills: uniwindConfig.polyfills,
         })
 
         uniwind.virtualModules.set(getVirtualPath(platform), virtualFile)
 
         return virtualFile
+    }
+
+    uniwind.candidates = new Set(uniwind.getCandidates(uniwind.cssFile))
+    uniwind.cssFile = fs.readFileSync(uniwind.input, 'utf-8')
+
+    for (const platform of platforms) {
+        fs.writeFileSync(getVirtualPath(platform), await getVirtualFile(platform))
     }
 
     return {
