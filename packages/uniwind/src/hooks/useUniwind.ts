@@ -4,9 +4,13 @@ import { CSSListener } from '../core/web'
 
 export const useUniwind = () => {
     const [theme, setTheme] = useState(Uniwind.currentTheme)
+    const [hasAdaptiveThemes, setHasAdaptiveThemes] = useState(Uniwind.hasAdaptiveThemes)
 
     useEffect(() => {
-        const dispose = CSSListener.addThemeListener(() => setTheme(Uniwind.currentTheme))
+        const dispose = CSSListener.addThemeListener(() => {
+            setTheme(Uniwind.currentTheme)
+            setHasAdaptiveThemes(Uniwind.hasAdaptiveThemes)
+        })
 
         return () => {
             dispose()
@@ -15,5 +19,6 @@ export const useUniwind = () => {
 
     return {
         theme: theme as ThemeName,
+        hasAdaptiveThemes,
     }
 }

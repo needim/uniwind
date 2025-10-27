@@ -1,5 +1,5 @@
 import { Declaration, MediaQuery, Rule, transform } from 'lightningcss'
-import { Polyfills } from '../types'
+import { Polyfills, ProcessMetaValues } from '../types'
 import { Color } from './color'
 import { CSS } from './css'
 import { Functions } from './functions'
@@ -18,6 +18,7 @@ export class ProcessorBuilder {
     Color = new Color(this)
     Units = new Units(this)
     Functions = new Functions(this)
+    meta = {} as ProcessMetaValues
 
     private declarationConfig = this.getDeclarationConfig()
 
@@ -85,6 +86,7 @@ export class ProcessorBuilder {
             style.active = this.declarationConfig.active
             style.focus = this.declarationConfig.focus
             style.disabled = this.declarationConfig.disabled
+            this.meta.className = this.declarationConfig.className
         }
 
         if (declaration.property === 'unparsed') {

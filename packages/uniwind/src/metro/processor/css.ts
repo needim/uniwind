@@ -1,6 +1,6 @@
 import { OverflowKeyword } from 'lightningcss'
 import { Logger } from '../logger'
-import { DeclarationValues, ProcessMetaValues } from '../types'
+import { DeclarationValues } from '../types'
 import { isDefined, pipe } from '../utils'
 import type { ProcessorBuilder } from './processor'
 
@@ -9,7 +9,7 @@ export class CSS {
 
     constructor(private readonly Processor: ProcessorBuilder) {}
 
-    processValue(declarationValue: DeclarationValues, meta = {} as ProcessMetaValues): any {
+    processValue(declarationValue: DeclarationValues): any {
         if (typeof declarationValue !== 'object') {
             return declarationValue
         }
@@ -143,7 +143,7 @@ export class CSS {
                         return `rt.insets.${inset}`
                     }
 
-                    this.logger.error(`Unsupported env value - ${JSON.stringify(declarationValue.value)}`)
+                    this.logUnsupported(`Unsupported env value - ${JSON.stringify(declarationValue.value)}`)
 
                     return ''
                 case 'time': {
@@ -180,7 +180,7 @@ export class CSS {
                         return declarationValue.value
                     }
 
-                    this.logger.error(`Unsupported keyword value - ${JSON.stringify(declarationValue)}`)
+                    this.logUnsupported(`Unsupported keyword value - ${JSON.stringify(declarationValue)}`)
 
                     return ''
                 case 'min-max':
@@ -243,7 +243,7 @@ export class CSS {
                         return declarationValue.type
                     }
 
-                    this.logger.error(`Unsupported value type - ${declarationValue.type}`)
+                    this.logUnsupported(`Unsupported value type - ${JSON.stringify(declarationValue.type)}`)
 
                     return ''
             }
@@ -276,48 +276,24 @@ export class CSS {
         }
 
         if (Array.isArray(declarationValue)) {
-            switch (meta.propertyName) {
-                case 'transform': {
-                    const transforms = declarationValue.reduce<Array<any>>((acc, value) => {
-                        if (typeof value === 'object') {
-                            const result = this.processValue(value)
+            return this.addComaBetweenTokens(declarationValue).reduce<string | number>((acc, value, index, array) => {
+                if (typeof value === 'object') {
+                    const nextValue = array.at(index + 1)
 
-                            acc.push(result)
-
-                            return acc
-                        }
-
-                        acc.push(value)
-
+                    // Dimensions might be duplicated
+                    if (this.isDimension(value) && this.isDimension(nextValue)) {
                         return acc
-                    }, [])
+                    }
 
-                    const transformsEntries = transforms
-                        .flatMap(transform => typeof transform === 'object' ? Object.entries(transform) : null)
-                        .filter(isDefined)
+                    const result = this.processValue(value)
 
-                    return Object.fromEntries(transformsEntries)
+                    return acc === '' && typeof result === 'number'
+                        ? result
+                        : acc + result
                 }
-                default:
-                    return this.addComaBetweenTokens(declarationValue).reduce<string | number>((acc, value, index, array) => {
-                        if (typeof value === 'object') {
-                            const nextValue = array.at(index + 1)
 
-                            // Dimensions might be duplicated
-                            if (this.isDimension(value) && this.isDimension(nextValue)) {
-                                return acc
-                            }
-
-                            const result = this.processValue(value)
-
-                            return acc === '' && typeof result === 'number'
-                                ? result
-                                : acc + result
-                        }
-
-                        return acc + value
-                    }, '')
-            }
+                return acc + value
+            }, '')
         }
 
         if ('property' in declarationValue) {
@@ -421,13 +397,13 @@ export class CSS {
             }
         }
 
-        this.logger.error(
-            [
-                `Unsupported value ${JSON.stringify(declarationValue)}`,
-                meta.propertyName !== undefined ? `for property ${meta.propertyName}` : null,
-                meta.className !== undefined ? `for className ${meta.className}` : null,
-            ].filter(Boolean).join(' '),
-        )
+        if ('keyword' in declarationValue) {
+            return declarationValue.keyword === 'auto' || declarationValue.keyword === 'pointer'
+                ? declarationValue.keyword
+                : 'auto'
+        }
+
+        this.logUnsupported(`Unsupported value - ${JSON.stringify(declarationValue)}`)
 
         return ''
     }
@@ -471,5 +447,14 @@ export class CSS {
 
             return acc
         }, [])
+    }
+
+    private logUnsupported(message: string) {
+        this.logger.error(
+            [
+                message,
+                this.Processor.meta.className !== undefined ? `for className ${this.Processor.meta.className}` : null,
+            ].filter(Boolean).join(' '),
+        )
     }
 }

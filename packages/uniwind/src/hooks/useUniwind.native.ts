@@ -5,10 +5,12 @@ import { StyleDependency } from '../types'
 
 export const useUniwind = () => {
     const [theme, setTheme] = useState(Uniwind.currentTheme)
+    const [hasAdaptiveThemes, setHasAdaptiveThemes] = useState(Uniwind.hasAdaptiveThemes)
 
     useEffect(() => {
         const dispose = UniwindStore.subscribe(() => {
             setTheme(Uniwind.currentTheme)
+            setHasAdaptiveThemes(Uniwind.hasAdaptiveThemes)
         }, [StyleDependency.Theme])
 
         return () => {
@@ -18,5 +20,6 @@ export const useUniwind = () => {
 
     return {
         theme,
+        hasAdaptiveThemes,
     }
 }

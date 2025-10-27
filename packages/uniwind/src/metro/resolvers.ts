@@ -93,7 +93,7 @@ export const webResolver = ({
     const isIndex = segments.at(-1)?.startsWith('index.')
     const module = segments.at(-2)
 
-    if (!isIndex || module === undefined || !SUPPORTED_COMPONENTS.includes(module) || context.originModulePath.endsWith(`${module}/index.js`)) {
+    if (!isIndex || module === undefined || !SUPPORTED_COMPONENTS.includes(module) || context.originModulePath.endsWith(`${module}${sep}index.js`)) {
         return resolution
     }
 

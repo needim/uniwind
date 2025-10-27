@@ -9,6 +9,7 @@ export const copyComponentProperties = (Component: any, UniwindComponent: any) =
     })
 
     UniwindComponent.displayName = Component.displayName
+    UniwindComponent.prototype = Object.getPrototypeOf(Component)
 
     return UniwindComponent
 }
